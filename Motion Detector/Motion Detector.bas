@@ -2,8 +2,7 @@ Attribute VB_Name = "MotionDetectorModule"
 'This module contains this program's main code.
 Option Explicit
 
-'The Microsoft Windows API constants, functions and structures used by this program.
-
+'Defines the Microsoft Windows API constants, functions and structures used by this program.
 Private Type BITMAPINFOHEADER
    bmSize As Long
    bmWidth As Long
@@ -82,14 +81,14 @@ Private Declare Function IsWindow Lib "User32.dll" (ByVal hwnd As Long) As Long
 Private Declare Function SetDIBits Lib "Gdi32.dll" (ByVal hDC As Long, ByVal hBitmap As Long, ByVal nStartScan As Long, ByVal nNumScans As Long, ByRef lpBits As Any, ByRef lpBI As BITMAPINFO, ByVal wUsage As Long) As Long
 
 
-'The constants, structures, and, variables used by this program.
-Private Const NOHANDLE As Long = 0 'Stands for: "no handle".
+'Defines the constants, structures, and, variables used by this program.
+Private Const NOHANDLE As Long = 0 'Defines "no handle".
 
 'This structure defines a RGB color.
 Private Type RGBStr
-   Red As Long    'Contains the red color component.
-   Green As Long  'Contains the green color component.
-   Blue As Long   'Contains the blue color component.
+   Red As Long     'Defines the red color component.
+   Green As Long   'Defines the green color component.
+   Blue As Long    'Defines the blue color component.
 End Type
 
 Public ColorThreshold As Long          'Contains the difference threshold between a pixel's current and previous color.
@@ -290,7 +289,7 @@ On Error GoTo ErrorTrap
    ColorThreshold = 12
    DisableWarning = False
    MotionThreshold = 10
-   EMailAddress = Empty
+   EMailAddress = vbNullString
 
    Do
       Restart = False
@@ -331,7 +330,7 @@ Dim Session As Object
 
    Message = "Motion (level " & CStr(MotionLevel) & ") detected." & vbCrLf & "Time: " & CStr(Now)
    
-   If EMailAddress = Empty Then
+   If EMailAddress = vbNullString Then
       Beep
       Message = Message & vbCrLf & "Continue displaying warnings?"
       DisableWarning = (MsgBox(Message, vbExclamation Or vbYesNo) = vbNo)

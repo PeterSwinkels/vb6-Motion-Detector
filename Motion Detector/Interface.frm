@@ -122,7 +122,7 @@ Attribute VB_Exposed = False
 'This module contains this program's main window.
 Option Explicit
 
-'This enumaration contains the list of the available views.
+'This enumeration lists the available views.
 Private Enum ViewsE
    CurrentView      'Current view.
    MotionView       'Motion viewer.
