@@ -99,6 +99,7 @@ Public Restart As Boolean              'Indicates whether the motion detection n
 
 'This procedure adjusts the specified picture box to the size of frames returned by the image capture device.
 Public Sub AdjustSize(PictureBoxV As PictureBox)
+On Error GoTo ErrorTrap
 Dim Status As CAPSTATUS
 
    Status = GetCaptureStatus()
@@ -109,7 +110,6 @@ Dim Status As CAPSTATUS
 ErrorTrap:
    HandleError
 End Sub
-
 
 'This procedure manages the capture window.
 Public Function CaptureWindow(Optional StartCapture As Boolean = False, Optional StopCapture As Boolean = False) As Long
