@@ -1,5 +1,5 @@
 Type=Exe
-Module=MotionDetectorModule; Motion Detector.bas
+Module=CoreModule; Core.bas
 Form=Interface.frm
 IconForm="InterfaceWindow"
 Startup="Sub Main"

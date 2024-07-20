@@ -157,6 +157,7 @@ End Sub
 'This procedure adjusts this window to the new size of the current view picture box.
 Private Sub CurrentViewBox_Resize()
 On Error GoTo ErrorTrap
+   
    With CurrentViewBox
       Me.Width = .Width * Screen.TwipsPerPixelX
       Me.Height = .Height * Screen.TwipsPerPixelY
@@ -180,8 +181,9 @@ End Sub
 'This procedure disabled/enables motion warnings.
 Private Sub DisableWarningMenu_Click()
 On Error GoTo ErrorTrap
-   DisableWarning = Not DisableWarning
-   DisableWarningMenu.Checked = DisableWarning
+   
+   Settings.DisableWarning = Not Settings.DisableWarning
+   DisableWarningMenu.Checked = Settings.DisableWarning
    Exit Sub
    
 ErrorTrap:
@@ -191,6 +193,7 @@ End Sub
 'This procedure initializes this window.
 Private Sub Form_Load()
 On Error GoTo ErrorTrap
+   
    GrabFrame CurrentViewBox
    
    SelectView MotionView
@@ -203,7 +206,8 @@ End Sub
 'This procedure gives the command to stop the video capture device when this window is closed.
 Private Sub Form_Unload(Cancel As Integer)
 On Error GoTo ErrorTrap
-   CaptureWindow , StopCapture:=True
+
+   CaptureWindow , , StopCapture:=True
    Exit Sub
    
 ErrorTrap:
@@ -214,8 +218,9 @@ End Sub
 'This procedure displays information about this program.
 Private Sub InformationMenu_Click()
 On Error GoTo ErrorTrap
+   
    With App
-      MsgBox .Comments, vbInformation, .Title & " v" & CStr(.Major) & "." & CStr(.Minor) & CStr(.Revision)
+      MsgBox .Comments, vbInformation, ProgramInformation()
    End With
    Exit Sub
    
@@ -229,12 +234,15 @@ On Error GoTo ErrorTrap
 Dim NewColorThreshold As Long
 Dim NewMotionThreshold As Long
 
-   NewColorThreshold = CLng(Val(InputBox$("Color difference threshold (1-255)", , CStr(ColorThreshold))))
-   NewMotionThreshold = CLng(Val(InputBox$("Warning motion threshold (1-100)", , CStr(MotionThreshold))))
-   EMailAddress = InputBox$("Send warning e-mails to (if none is specified, a message is displayed):", , EMailAddress)
+   With Settings
+      NewColorThreshold = CLng(Val(InputBox$("Color difference threshold (1-255)", , CStr(.ColorThreshold))))
+      NewMotionThreshold = CLng(Val(InputBox$("Warning motion threshold (1-100)", , CStr(.MotionThreshold))))
+      .EMailAddress = InputBox$("Send warning e-mails to (if none is specified, a message will be displayed):", , .EMailAddress)
+      
+      If NewColorThreshold >= 1 And NewColorThreshold <= 255 Then .ColorThreshold = NewColorThreshold
+      If NewMotionThreshold >= 1 And NewMotionThreshold <= 100 Then .MotionThreshold = NewMotionThreshold
+   End With
    
-   If NewColorThreshold >= 1 And NewColorThreshold <= 255 Then ColorThreshold = NewColorThreshold
-   If NewMotionThreshold >= 1 And NewMotionThreshold <= 100 Then MotionThreshold = NewMotionThreshold
    Exit Sub
    
 ErrorTrap:
@@ -244,6 +252,7 @@ End Sub
 'This procedure closes this window.
 Private Sub QuitMenu_Click()
 On Error GoTo ErrorTrap
+   
    Unload Me
    Exit Sub
    
@@ -255,6 +264,7 @@ End Sub
 'This procedure opens the video compression dialog window.
 Private Sub VideoCompressionMenu_Click()
 On Error GoTo ErrorTrap
+   
    CheckForError SendMessageA(CaptureWindow(), WM_CAP_DLG_VIDEOCOMPRESSION, CLng(0), CLng(0))
    Exit Sub
    
@@ -265,6 +275,7 @@ End Sub
 'This procedure opens the video format dialog window.
 Private Sub VideoFormatMenu_Click()
 On Error GoTo ErrorTrap
+   
    CheckForError SendMessageA(CaptureWindow(), WM_CAP_DLG_VIDEOFORMAT, CLng(0), CLng(0))
    CaptureWindow , StopCapture:=True
    AdjustSize CurrentViewBox
@@ -278,6 +289,7 @@ End Sub
 'This procedure opens the video source dialog window.
 Private Sub VideoSourceMenu_Click()
 On Error GoTo ErrorTrap
+   
    CheckForError SendMessageA(CaptureWindow(), WM_CAP_DLG_VIDEOSOURCE, CLng(0), CLng(0))
    Exit Sub
    
@@ -288,6 +300,7 @@ End Sub
 'This procedure gives the command change the view to the user's selection.
 Private Sub ViewMenu_Click(Index As Integer)
 On Error GoTo ErrorTrap
+   
    SelectView CLng(Index)
    Exit Sub
    
