@@ -54,23 +54,23 @@ Private Type BITMAPINFO
    bmColors(0 To 255) As RGBTRIPLE
 End Type
 
-Public Const WM_CAP_DLG_VIDEOCOMPRESSION As Long = 1070&
-Public Const WM_CAP_DLG_VIDEOFORMAT As Long = 1065&
-Public Const WM_CAP_DLG_VIDEOSOURCE As Long = 1066&
-Private Const BI_RGB As Long = 0&
-Private Const DIB_RGB_COLORS As Long = 0&
+Public Const WM_CAP_DLG_VIDEOCOMPRESSION As Long = &H42E&
+Public Const WM_CAP_DLG_VIDEOFORMAT As Long = &H429&
+Public Const WM_CAP_DLG_VIDEOSOURCE As Long = &H430
+Private Const BI_RGB As Long = &H0&
+Private Const DIB_RGB_COLORS As Long = &H0&
 Private Const ERROR_FILE_NOT_FOUND As Long = 2&
 Private Const ERROR_IO_PENDING As Long = 997&
 Private Const ERROR_SUCCESS As Long = 0&
 Private Const FORMAT_MESSAGE_FROM_SYSTEM As Long = &H1000&
 Private Const FORMAT_MESSAGE_IGNORE_INSERTS As Long = &H200&
 Private Const MAX_STRING As Long = 65535
-Private Const WM_CAP_DRIVER_CONNECT As Long = 1034&
-Private Const WM_CAP_DRIVER_DISCONNECT As Long = 1035&
-Private Const WM_CAP_EDIT_COPY As Long = 1054&
-Private Const WM_CAP_GET_STATUS As Long = 1078&
-Private Const WM_CAP_GRAB_FRAME As Long = 1084&
-Private Const WM_CLOSE As Long = 16&
+Private Const WM_CAP_DRIVER_CONNECT As Long = &H40A&
+Private Const WM_CAP_DRIVER_DISCONNECT As Long = &H40B&
+Private Const WM_CAP_EDIT_COPY As Long = &H41E&
+Private Const WM_CAP_GET_STATUS As Long = &H436&
+Private Const WM_CAP_GRAB_FRAME As Long = &H43C&
+Private Const WM_CLOSE As Long = &H10&
 Private Const WS_CHILD As Long = &H40000000
 
 Public Declare Function SendMessageA Lib "User32.dll" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
